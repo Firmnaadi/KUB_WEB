@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         $sql = "SELECT * FROM detail_akun WHERE email='$email ";
         $result = mysqli_query($conn, $sql);
         if (!$result->num_rows > 0) {
-            $sql = "INSERT INTO detail_akun VALUES (NULL,'$email','$password','$fulllname','2')";
+            $sql = "INSERT INTO detail_akun VALUES (NULL,'$email','$password','$fulllname','1')";
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 echo "<script>alert('Selamat, registrasi berhasil!')</script>";
@@ -28,6 +28,7 @@ if (isset($_POST['submit'])) {
                 $email = "";
                 $_POST['pass'] = "";
                 $_POST['cpassword'] = "";
+                header("location: index.php");
             } else {
                 echo "<script>alert('Woops! Terjadi kesalahan.')</script>";
             }
@@ -77,11 +78,9 @@ if (isset($_POST['submit'])) {
                         <div class="p-5">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                                <form action="" method="POST">
-                            <input type="hidden" value="1" name="id">
-
                             </div>
-                            
+                            <form action="" method="POST">
+                            <input type="hidden" value="1" name="id">
                                 <div class="form-group">
                                
                                         <input type="text" class="form-control form-control-user" id="nama"
@@ -96,7 +95,7 @@ if (isset($_POST['submit'])) {
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="password" placeholder="Password" name="password" require/>
+                                            id="password" placeholder="password" name="password" require>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="cpassword" class="form-control form-control-user"
@@ -109,7 +108,7 @@ if (isset($_POST['submit'])) {
                                 <hr>
                            
                             <div class="text-center">
-                                <a class="small" href="login.php">Already have an account? Login!</a>
+                                <a class="small" href="index.php">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>

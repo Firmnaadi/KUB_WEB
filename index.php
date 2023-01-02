@@ -1,173 +1,65 @@
-<?php
-
-require('koneksi.php');
-session_start();
-$crud = new coba_oop();
-
-if (isset($_POST["submit"])) {
-  $data = $crud->showData("SELECT * FROM `detail_akun` WHERE email='" . $_POST["email"] . "'");
-
-  if ($_POST["email"] == $data["email"] && $_POST["password"] == $data["password"]) {
-    $_SESSION['id'] = $data["id"];
-    $_SESSION['name'] = $data["fullname"];
-    $_SESSION['level'] = $data["level"];
-    echo ("<script>
-    alert('Berhasil');
-  </script>");
-    header('Location: dashboard.php');
-  } else {
-    echo "user atau password salah!!";
-  }
-}
-if (isset($_SESSION['id'])) {
-  header('dashboard.php');
-}
-// if(isset($_POST['submit'])){
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-
-//     if(!empty(trim($email)) && !empty(trim($password))){
-//         $query = "SELECT * FROM detail_akun WHERE email='$email'";
-//         $result = mysqli_query($conn,$query);
-//          $num = mysqli_num_rows($result);
-
-//         var_dump($result);
-
-//         while ($row = mysqli_fetch_array($result)){
-//             $id = $row['id'];
-//             $userVal = $row['email'];
-//             $passVal =$row['password'];
-//             $userName = $row['fullname'];
-//             $level = $row['level'];
-//         }
-
-//         if($num != 0){
-//             if($userVal==$email && $passVal==$password){
-//                 // header('Location: home.php?fullname='.urlencode($username));
-//                 $_SESSION['id'] = $id;
-//                 $_SESSION['name'] = $userName;
-//                 $_SESSION['level'] = $level;
-//                 header('Location: dashboard.php');
-
-//             }else{
-//                 $error = 'user atau password salah!!';
-//                 header('Location: login.php');
-//             }
-//         }else{
-//             $error = 'user tidak ditemukan!!';
-//             header('Location: login.php');
-//         }
-//     }else{
-//         $error = 'Data tidak boleh kosong!!';
-//         echo $error;
-//     }
-// }
-
-// require_once "koneksi.php";
-// if ($user->login($_POST["email"], $_POST["password"])){
-//   header("location: dashboard.php");
-// }
-// if(isset($_POST['kirim'])){
-//   $email = $_POST['email'];
-//   $password = $_POST['password'];
-//   if($user->login($email,$password)){
-//     header("location: dashboard.php");
-//   }else{
-//     $error = $user->getLastError(); 
-//   }
-// }
-?>
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-
+  <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Login</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-</head>
-
-<body class="bg-gradient-warning">
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                          
-                            <div class="col-md-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
-                                    </div>
-                                    <form action="" method="POST">
-                                    <div class="form-outline mb-4">
-              <label class="form-label" for="email">Email</label>
-              <input type="text" id="email" class="form-control form-control-lg" name="email" />
-            </div>
-            <!--password-->
-            <div class="form-outline mb-4">
-              <label class="form-label" for="password">Password</label>
-              <input type="password" id="password" class="form-control form-control-lg" name="password" />
-            </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <button type = "submit" class="btn btn-warning btn-user btn-block" name = "submit">login </button>
-                                        <hr>
-                                  
-                                   
-                                    <div class="text-center">
-                                        <a class="small" href="register.php">PT Karya Usaha Baru</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--css-->
+    <link rel="stylesheet" href="landingpage.css">
+    <title>Ayam KUB | PT.KARYA USAHA BARU</title>
+    
+  </head>
+  <body>
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-warning shadow-sm ">
+  <div class="container">
+    <a class="navbar-brand" href="#">AYAM KUB</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.php">login</a>
+        </li>
+        </ul>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-</body>
-
-</html> 
+  </div>
+</nav>
+    
+    <!--Jumbotron-->
+    <section class="jumbotron text-center" >
+        <img src="img/ayam.jpeg" class="rounded-circle" alt="Ayam KUB" width="200">
+  <h1 class="display-4">Ayam KUB</h1>
+  <p class="lead  ">Perusahaan Peternakan yang terintergrasi yang memberikan produk terbaik pada konsumen. Perusahaan kami bergerak pada pembibitan ayam dan perternakan ayam petelur. Kami mengedepankan khawalitas telur terbaik dan bibit yang sempurna.</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffffff" fill-opacity="1" d="M0,256L48,229.3C96,203,192,149,288,149.3C384,149,480,203,576,192C672,181,768,107,864,96C960,85,1056,139,1152,165.3C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+</section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!--about-->
+<section id="about">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col">
+        <h2>about</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center fs-5 text-center">
+      <div class="col-4"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet voluptate id quos temporibus pariatur omnis quaerat possimus error, hic corporis in dolore commodi earum, illum architecto laborum ea veritatis et!</p></div>
+      <div class="col-4"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus vero illo repellat quam? Ratione vero iusto magnam quasi quo culpa quia eum at corporis repudiandae. Saepe voluptatem dicta cumque in?</p></div>
+    </div>
+  </div >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffd700" fill-opacity="1" d="M0,256L48,229.3C96,203,192,149,288,149.3C384,149,480,203,576,192C672,181,768,107,864,96C960,85,1056,139,1152,165.3C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+</section>
+<!--projects-->
+<section id="projects">
+   
+</section>
+ <!--projects-->
+  </body>
+</html>

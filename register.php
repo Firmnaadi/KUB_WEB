@@ -1,7 +1,7 @@
 
 <?php
 include 'koneksi.php';
-error_reporting(0);
+error_reporting(1);
 session_start();
 
 if (isset($_SESSION['nama'])) {
@@ -15,26 +15,38 @@ if (isset($_POST['submit'])) {
     // $level = 1;
     // $password = md5($_POST['password']);
     // $cpassword = md5($_POST['cpasswprd']);
-
     if ($password == $cpassword) {
-        $sql = "SELECT * FROM detail_akun WHERE email='$email ";
+        $sql = "SELECT * FROM detail_akun WHERE email='$email' ";
         $result = mysqli_query($conn, $sql);
-        if (!$result->num_rows > 0) {
-            $sql = "INSERT INTO detail_akun VALUES (NULL,'$email','$password','$fulllname','1')";
+        if ($result->num_rows == 0) {
+           try {
+            $sql = "INSERT INTO detail_akun(`email`, `password`, `fulllname`, `level`) VALUES ('$email','$password','$fulllname','1')";
             $result = mysqli_query($conn, $sql);
-            if ($result) {
-                echo "<script>alert('Selamat, registrasi berhasil!')</script>";
-                $nama = "";
-                $email = "";
-                $_POST['pass'] = "";
-                $_POST['cpassword'] = "";
-                header("location: index.php");
-            } else {
-                echo "<script>alert('Woops! Terjadi kesalahan.')</script>";
-            }
-        } else {
+            echo "<script>alert('Selamat, registrasi berhasil!')</script>";
+            $nama = "";
+            $email = "";
+            $_POST['pass'] = "";
+            $_POST['cpassword'] = "";
+            header("Location: login.php");
+            new Exception("error");
+           } catch (Exception $e) {
+            echo $e->getMessage();
+           }
+            // if ($result) {
+            //     echo "<script>alert('Selamat, registrasi berhasil!')</script>";
+            //     $nama = "";
+            //     $email = "";
+            //     $_POST['pass'] = "";
+            //     $_POST['cpassword'] = "";
+            //     header("Location: login.php");
+            // } else {
+            //     echo "<script>alert('Woops! Terjadi kesalahan.')</script>";
+            // }
+        } 
+        else {
             echo "<script>alert('Woops! Email Sudah Terdaftar.')</script>";
         }
+        // header("Location: login.php");
     } else {
         echo "<script>alert('Password Tidak Sesuai')</script>";
     }
